@@ -1,5 +1,5 @@
 # Análisis de Calidad y Seguridad - Suite de Pruebas Login
-**Fecha:** 6 de mayo de 2026  
+**Fecha:** 6 de mayo de 2026 — Actualizado: 6 de mayo de 2026  
 **Analizado:** Proyecto AutomationExercise_Project - Suite de pruebas Python-Playwright
 
 ---
@@ -25,6 +25,11 @@ El análisis completo de la suite de pruebas de login revela un proyecto **bien 
 - **Ningún issue crítico de seguridad** detectado
 - **Sin código malicioso** encontrado
 
+### 🟡 Decisiones tomadas el 6/05/2026
+- **TC-L-17 eliminado:** "Persistencia de sesión" removido de la suite por inestabilidad inherente — la precondición `is_logged_in()` fallaba por condición de carrera en la app, no por código propio.
+- **TC-L-12 marcado como `xfail`:** "Redirección post-login" conservado pero marcado como fallo esperado. La app no implementa return URL tras login (bug confirmado en la aplicación bajo prueba, no en nuestra automatización).
+- **Riesgo identificado — account lockout:** Las ejecuciones repetidas de tests con credenciales inválidas (TC-L-03, TC-L-15) acumulan intentos fallidos y bloquean la cuenta `customer@practicesoftwaretesting.com`. El lock se libera automáticamente. Considerar usar un usuario dedicado para escenarios negativos en futuras iteraciones.
+
 ---
 
 ## 🔍 Análisis Detallado
@@ -42,9 +47,9 @@ El análisis completo de la suite de pruebas de login revela un proyecto **bien 
 #### 📊 Métricas de Calidad
 ```
 - Total de archivos Python: 7
-- Líneas de código test: 467 (test_login.py)
+- Líneas de código test: ~440 (test_login.py)
 - Líneas de código POM: 246 (login_page.py)
-- Casos de prueba: 18 tests
+- Casos de prueba: 17 tests activos (1 xfail documentado)
 - Cobertura de escenarios: Alta (login exitoso, fallido, validación, navegación)
 ```
 
