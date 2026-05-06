@@ -2,6 +2,8 @@
 # Suite de automatización — Módulo Login
 # Referencia: docs/casos_prueba_login.md | docs/exploracion_login.md
 
+import os
+
 import pytest
 import allure
 from pages.login_page import LoginPage
@@ -9,15 +11,17 @@ from pages.login_page import LoginPage
 # ============================================================
 # CONSTANTES: DATOS DE PRUEBA (seed data oficial del sistema)
 # Fuente: apichallenges.eviltester.com/practice-sites/apps/toolshop
+# Credenciales leídas desde variables de entorno — nunca hardcodeadas.
+# Local: definir en .env  |  CI: definir como secrets en GitHub Actions
 # ============================================================
 CUSTOMER_EMAIL = "customer@practicesoftwaretesting.com"
-CUSTOMER_PASSWORD = "welcome01"
+CUSTOMER_PASSWORD = os.environ["TEST_CUSTOMER_PASSWORD"]
 
 ADMIN_EMAIL = "admin@practicesoftwaretesting.com"
-ADMIN_PASSWORD = "welcome01"
+ADMIN_PASSWORD = os.environ["TEST_ADMIN_PASSWORD"]
 
 INVALID_EMAIL = "noexiste@test.com"
-INVALID_PASSWORD = "wrongpassword123"
+INVALID_PASSWORD = os.environ["TEST_INVALID_PASSWORD"]
 MALFORMED_EMAIL_NO_AT = "usuariosinarroba.com"
 MALFORMED_EMAIL_NO_DOMAIN = "usuario@"
 

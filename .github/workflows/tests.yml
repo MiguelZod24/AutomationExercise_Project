@@ -30,6 +30,10 @@ jobs:
       - name: Run tests
         run: pytest --junitxml=reports/results.xml
         continue-on-error: true
+        env:
+          TEST_CUSTOMER_PASSWORD: ${{ secrets.TEST_CUSTOMER_PASSWORD }}
+          TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
+          TEST_INVALID_PASSWORD: ${{ secrets.TEST_INVALID_PASSWORD }}
 
       - name: Upload reports
         uses: actions/upload-artifact@v4
@@ -84,9 +88,9 @@ jobs:
           name: test-reports
           path: reports/
 
-      - uses: SonarSource/sonarcloud-github-action@master
+      - uses: SonarSource/sonarqube-scan-action@v5
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   # ── JOB 4: Publicar reporte HTML descargable ─────────────────────────────
