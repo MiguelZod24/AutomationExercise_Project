@@ -90,6 +90,16 @@ jobs:
           name: test-reports
           path: reports/
 
+      - name: Verificar SONAR_TOKEN
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          if [ -z "$SONAR_TOKEN" ]; then
+            echo "::error::SONAR_TOKEN está vacío — verificar el secret en GitHub"
+            exit 1
+          fi
+          echo "SONAR_TOKEN recibido correctamente (longitud: ${#SONAR_TOKEN} caracteres)"
+
       - uses: SonarSource/sonarqube-scan-action@0303d6b62e310685c0e34d0b9cde218036885c4d # v5.0.0
         env:
           SONAR_HOST_URL: https://sonarcloud.io
