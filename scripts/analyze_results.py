@@ -51,7 +51,7 @@ def analyze_with_github_models(results: dict) -> str:
         return "_GITHUB_TOKEN no disponible — análisis omitido._"
 
     client = OpenAI(
-        base_url="https://models.inference.ai.azure.com",
+        base_url="https://models.github.ai/inference",
         api_key=token,
     )
 
@@ -81,7 +81,7 @@ Responde con exactamente estas tres secciones (máximo 160 palabras en total):
 3. **Acción recomendada** — qué hacer ahora."""
 
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="openai/gpt-4o",
         messages=[{"role": "user", "content": content}],
         max_tokens=400,
         temperature=0.2,
