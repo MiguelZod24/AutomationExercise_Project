@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.11'
-        }
-    }
+    agent any
 
     stages {
 
@@ -14,10 +10,14 @@ pipeline {
             }
         }
 
-        stage('Instalar dependencias') {
+        stage('Instalar Python y dependencias') {
             steps {
-                echo 'Instalando dependencias de Python'
-                sh 'pip install -r requirements.txt'
+                echo 'Instalando Python y dependencias'
+                sh '''
+                    apt-get update -q
+                    apt-get install -y python3 python3-pip
+                    pip3 install -r requirements.txt --break-system-packages
+                '''
             }
         }
 
@@ -27,6 +27,9 @@ pipeline {
                 sh 'pytest --tb=short'
             }
         }
+
+    }
+}
 
     }
 }
